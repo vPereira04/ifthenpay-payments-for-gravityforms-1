@@ -1,0 +1,281 @@
+/* ifthenpay | Payments for Gravity Forms — Frontend Field Styles */
+
+/* ---- Icon font ---- */
+@font-face {
+  font-family: ifthenpay-icons;
+  src: url('../fonts/ifthenpay-icons.woff2') format('woff2'),
+       url('../fonts/ifthenpay-icons.woff') format('woff'),
+       url('../fonts/ifthenpay-icons.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+
+.iftp-gf-field-icon {
+  font-family: ifthenpay-icons;
+  font-style: normal;
+  font-weight: 100;
+  font-size: 22px;
+  color: rgb(0 96 156);
+  line-height: 1;
+  display: inline-block;
+}
+
+.iftp-gf-field-icon::before {
+  content: "\e002";
+}
+
+.iftp-gf-field--dark .iftp-gf-field-icon {
+  color: #F6F9FC;
+}
+
+/* ---- Box-sizing reset for the field ---- */
+.gfield--type-iftp_pbl,
+.gfield--type-iftp_pbl * {
+	box-sizing: border-box;
+}
+
+.iftp-gf-field {
+	margin: 0;
+	font-family: inherit;
+}
+
+/* ---- Outer card (GF control surface tokens) ----
+ * Background / border / radius use the same control tokens as input fields, so
+ * the card visually tracks whatever per-form theme the admin picks (e.g. the
+ * magenta example with --gf-ctrl-border-color: #ff3cfc).
+ * Padding uses --gf-padding-y/--gf-padding-x (general spacing, 12px default in
+ * orbital) because --gf-ctrl-padding-y is 0 in orbital (inputs are sized via
+ * --gf-ctrl-size, not padding-y, so reusing it would flatten our card).
+ * Each fallback matches the legacy 2.5 theme look.
+ */
+.iftp-gf-box {
+	max-width: 100%;
+	overflow: hidden; /* clips child content to the rounded border */
+	background: var(--gf-ctrl-bg-color, #fff);
+	color: var(--gf-ctrl-color, var(--gf-color-out-ctrl-dark-darker, #112337));
+	border-width: var(--gf-ctrl-border-width, 1px);
+	border-style: var(--gf-ctrl-border-style, solid);
+	border-color: var(--gf-ctrl-border-color, rgb(17 35 55 / 10%));
+	border-radius: var(--gf-radius, 3px);
+
+	/* Grow padding with the radius so content never clips into the rounded corners.
+	   Stays at the base 16px up to radius 45px, then grows at 0.7× slope.
+	   Capped at 80px so pill values (9999px) don't inflate padding into a brick. */
+	--iftp-r-cap: min(var(--gf-radius, 3px), 80px);
+
+	padding-block: max(var(--gf-padding-y, 16px), calc(var(--iftp-r-cap) * 0.7 - 15.5px));
+	padding-inline: max(var(--gf-padding-x, 16px), calc(var(--iftp-r-cap) * 0.7 - 15.5px));
+	text-align: left;
+	font-family: var(--gf-ctrl-font-family, inherit);
+	font-size: var(--gf-ctrl-font-size, var(--gf-font-size-secondary, 14px));
+	line-height: 1.5;
+}
+
+/* ---- Header (logo + title) ---- */
+.iftp-gf-box__header {
+	display: flex;
+	align-items: center;
+	margin-bottom: 12px;
+}
+
+.iftp-gf-box__header-icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 30px;
+	height: 30px;
+	border-radius: var(--gf-radius, 3px);
+	flex-shrink: 0;
+}
+
+.iftp-gf-box__header-text {
+	margin-left: 10px;
+	line-height: 1.2;
+}
+
+.iftp-gf-box__header-title {
+	font-weight: 600;
+	color: var(--gf-ctrl-label-color-quaternary, #112337);
+	font-size: var(--gf-font-size-secondary, 14px);
+}
+
+.iftp-gf-box__header-subtitle {
+	font-size: var(--gf-font-size-tertiary, 13px);
+	color: var(--gf-color-out-ctrl-dark-darker, #585e6a);
+	margin-top: 2px;
+}
+
+/* ---- Methods row ---- */
+.iftp-gf-box__methods {
+	padding: 8px 0 4px;
+}
+
+.iftp-gf-box__methods-title {
+	font-size: var(--gf-font-size-tertiary, 13px);
+	font-weight: 600;
+	color: var(--gf-ctrl-label-color-quaternary, #112337);
+	margin-bottom: 10px;
+}
+
+.iftp-gf-box__methods-list {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 10px;
+}
+
+.iftp-gf-box__method {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.iftp-gf-box__method-logo {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 52px;
+	height: 36px;
+	padding: 4px;
+	border-radius: var(--gf-radius, 3px);
+	transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.iftp-gf-box__method[data-entity="CCARD"] .iftp-gf-box__method-logo {
+	width: 90px;
+}
+
+.iftp-gf-box__method-logo picture {
+	display: contents;
+}
+
+.iftp-gf-box__method-logo img {
+	max-width: 100%;
+	max-height: 100%;
+	object-fit: contain;
+	display: block;
+}
+
+/* ---- Info block (subtle inset using the form's outer-surface light tint) ---- */
+.iftp-gf-box__info {
+	margin-top: 12px;
+	padding: 10px 12px;
+	border-radius: var(--gf-radius, 3px);
+	font-size: var(--gf-font-size-tertiary, 13px);
+	color: var(--gf-ctrl-label-color-quaternary, #112337);
+}
+
+.iftp-gf-box__info strong {
+	color: var(--gf-ctrl-label-color-quaternary, #112337);
+}
+
+.iftp-gf-box__info ul {
+	margin: 6px 0 0;
+	padding-left: 18px;
+}
+
+.iftp-gf-box__info ul li + li {
+	margin-top: 2px;
+}
+
+.iftp-gf-box__info-list {
+	color: var(--gf-color-out-ctrl-dark-darker, #585e6a);
+}
+
+/* ---- Pay button (uses GF orbital token variables) ---- */
+.iftp-gf-box__pay {
+	margin-top: 18px;
+}
+
+.iftp-gf-box__pay-btn {
+	appearance: none;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: 8px;
+	padding: 10px 20px;
+	background: var(--gf-color-primary, #204ce5);
+	color: var(--gf-color-primary-contrast, #fff);
+	border: 1px solid var(--gf-color-primary, #204ce5);
+	border-radius: var(--gf-radius, 3px);
+	font-size: var(--gf-font-size-secondary, 14px);
+	font-weight: 600;
+	cursor: pointer;
+	line-height: 1.2;
+	transition: background-color 0.15s ease, border-color 0.15s ease;
+}
+
+.iftp-gf-box__pay-btn:disabled {
+	opacity: 0.55;
+	cursor: not-allowed;
+}
+
+.iftp-gf-box__pay-btn:hover:not(:disabled) {
+	background: var(--gf-color-primary-darker, #001AB3);
+	border-color: var(--gf-color-primary-darker, #001AB3);
+}
+
+.iftp-gf-box__pay-btn--paid {
+	background: #198754;
+	border-color: #198754;
+}
+
+.iftp-gf-box__pay-btn--paid:hover {
+	background: #157347;
+	border-color: #157347;
+}
+
+/* ---- Spinner ---- */
+.iftp-gf-box__spinner {
+	width: 14px;
+	height: 14px;
+	border: 2px solid rgb(255 255 255 / 40%);
+	border-top-color: #fff;
+	border-radius: 50%;
+	animation: iftp-gf-spin 0.7s linear infinite;
+	display: none;
+	flex-shrink: 0;
+}
+
+.iftp-gf-box__pay-btn--loading .iftp-gf-box__spinner {
+	display: inline-block;
+}
+
+@keyframes iftp-gf-spin {
+	to { transform: rotate(360deg); }
+}
+
+/* ---- Status messages ---- */
+.iftp-gf-status {
+	margin-top: 12px;
+	padding: 10px 12px;
+	border-radius: var(--gf-radius, 3px);
+	font-size: var(--gf-font-size-tertiary, 13px);
+	display: none;
+}
+
+.iftp-gf-status--visible { display: block; }
+.iftp-gf-status--success { color: #1b5e20; }
+.iftp-gf-status--error   { background: #fdecea; }
+.iftp-gf-status--info    { border: 1px solid #90caf9; }
+
+.iftp-gf-runtime-warning {
+	margin-top: 10px;
+	padding: 10px 12px;
+	border-radius: var(--gf-radius, 3px);
+	font-size: var(--gf-font-size-tertiary, 13px);
+	background: #fff8e1;
+	color: #7c5e10;
+	border: 1px solid #ffe082;
+	display: none;
+}
+
+/* ---- Responsive ---- */
+@media (width <= 600px) {
+	.iftp-gf-box {
+		padding-block: max(12px, calc(min(var(--gf-radius, 3px), 80px) * 0.7 - 15.5px));
+		padding-inline: max(12px, calc(min(var(--gf-radius, 3px), 80px) * 0.7 - 15.5px));
+	}
+	.iftp-gf-box__pay-btn { width: 100%; }
+}
+

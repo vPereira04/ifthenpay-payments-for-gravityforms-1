@@ -1,0 +1,282 @@
+/* ifthenpay | Payments for Gravity Forms — Admin Styles */
+
+/* -------------------------------------------------------------------------
+   Backoffice key row (plugin settings page)
+   ------------------------------------------------------------------------- */
+
+.iftp-gf-key-row {
+    margin: 6px 0 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+/* Specificity 0,2,0 beats .iftp-gf-key-row's display:flex (0,1,0) */
+.iftp-gf-key-row--hidden {
+    display: none;
+}
+
+/* Inline feedback message */
+.iftp-gf-message {
+    font-size: 0.8125rem;
+    font-weight: 500;
+    line-height: 1.125rem;
+}
+
+.iftp-gf-message--success {
+    color: #0a7227;
+}
+
+.iftp-gf-message--error {
+    color: #8a0000;
+}
+
+/* -------------------------------------------------------------------------
+   Global gateways overview table (plugin settings page)
+   ------------------------------------------------------------------------- */
+
+.iftp-gf-methods-table {
+    margin-top: 8px;
+    border-collapse: collapse;
+    width: 100%;
+    max-width: 700px;
+}
+
+.iftp-gf-methods-table th,
+.iftp-gf-methods-table td {
+    padding: 8px 12px;
+    text-align: left;
+    vertical-align: middle;
+    border-bottom: 1px solid #f0f0f1;
+}
+
+.iftp-gf-methods-table th {
+    background: #f6f7f7;
+    font-weight: 600;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: #50575e;
+}
+
+.iftp-gf-methods-table tr:last-child td {
+    border-bottom: none;
+}
+
+/* -------------------------------------------------------------------------
+   Payment methods list (feed settings page)
+   ------------------------------------------------------------------------- */
+
+.iftp-gf-methods-list {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    max-width: 600px;
+    margin-top: 4px;
+}
+
+.iftp-gf-method-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 10px 14px;
+    border: 1px solid #dcdcde;
+    border-radius: 3px;
+    background: #fff;
+    transition: border-color 0.12s ease, background 0.12s ease;
+}
+
+.iftp-gf-method-item:hover {
+    border-color: #8c8f94;
+    background: #fcfcfc;
+}
+
+.iftp-gf-method-item--enabled {
+    border-color: #68b3f0;
+    background: #f4faff;
+}
+
+.iftp-gf-method-item--enabled:hover {
+    border-color: #114774;
+    background: #eff7ff;
+}
+
+.iftp-gf-method-item__label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    flex: 1;
+    min-width: 0;
+}
+
+/* IsVisible=false from the API — label locked out, activate button remains interactive */
+.iftp-gf-method-item--unactivated {
+    border-color: #dcdcde;
+    background: #f6f7f7;
+}
+
+.iftp-gf-method-item--unactivated .iftp-gf-method-item__label {
+    opacity: 0.55;
+    pointer-events: none;
+}
+
+.iftp-gf-method-item__unavailable-badge {
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    color: #8c8f94;
+    background: #f0f0f1;
+    border: 1px solid #dcdcde;
+    border-radius: 2px;
+    padding: 1px 5px;
+    letter-spacing: 0.04em;
+    white-space: nowrap;
+}
+
+/* Grayed-out disabled options in the default method dropdown */
+select option:disabled {
+    color: #a7aaad;
+}
+
+.iftp-gf-method-item__toggle {
+    margin: 0;
+    flex-shrink: 0;
+}
+
+.iftp-gf-method-item__icon-wrap {
+    width: 72px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 3px;
+    flex-shrink: 0;
+    border-right: 1px solid #e5e7eb;
+    margin-right: 6px;
+}
+
+/* --wide is kept for backwards compat but no longer changes the size */
+.iftp-gf-method-item__icon-wrap--wide {
+    width: 72px;
+}
+
+.iftp-gf-method-item__icon-wrap img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    display: block;
+}
+
+.iftp-gf-method-item__name {
+    font-size: 13px;
+    font-weight: 500;
+    color: #1d2327;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.iftp-gf-method-item__right {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+}
+
+.iftp-gf-method-item__account {
+    font-size: 11px;
+    background: #f6f7f7;
+    padding: 2px 6px;
+    border-radius: 3px;
+    color: #50575e;
+}
+
+.iftp-gf-method-item__no-account {
+    color: #8c8f94;
+    font-size: 12px;
+    font-style: italic;
+}
+
+.iftp-gf-method-item__active-badge {
+    color: #166534;
+    font-size: 16px;
+    font-weight: bold;
+    line-height: 1;
+}
+
+.iftp-gf-method-item__account-select {
+    font-size: 12px !important;
+    width: 250px !important;
+}
+
+.iftp-gf-method-item__activation-sent,
+.iftp-gf-method-item__activation-cooldown {
+    font-size: 12px;
+    color: #646970;
+}
+
+.iftp-gf-method-item__activation-sent {
+    color: #166534;
+}
+
+.iftp-gf-no-methods,
+.iftp-gf-loading {
+    color: #8c8f94;
+    font-style: italic;
+    font-size: 13px;
+    margin: 8px 0;
+}
+
+.iftp-gf-error {
+    color: #b42318;
+    font-size: 13px;
+    margin: 8px 0;
+}
+
+/* -------------------------------------------------------------------------
+   Icons
+   ------------------------------------------------------------------------- */
+
+@font-face {
+  font-family: ifthenpay-icons;
+  src: url('../fonts/ifthenpay-icons.woff2') format('woff2'),
+       url('../fonts/ifthenpay-icons.woff') format('woff'),
+       url('../fonts/ifthenpay-icons.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+
+.gform-icon--ifthenpay {
+  font-family: ifthenpay-icons !important;
+  font-weight: 100 !important;
+}
+
+.gform-icon--ifthenpay::before {
+  content: "\e002";
+}
+
+.iftp-gf-field-icon {
+  font-family: ifthenpay-icons;
+  font-style: normal;
+  font-weight: 100;
+  font-size: 22px;
+  color: #00609c;
+  line-height: 1;
+  display: inline-block;
+}
+
+.iftp-gf-field-icon::before {
+  content: "\e002";
+}
+
+.iftp-gf-field--dark .iftp-gf-field-icon {
+  color: #F6F9FC;
+}
+
+.gform-icon.gform-icon--ifthenpay::before {
+    content: "\e002";
+}
