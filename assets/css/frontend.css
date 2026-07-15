@@ -35,6 +35,12 @@
 	box-sizing: border-box;
 }
 
+/* ---- "Hide field" admin setting ----
+ * Visually hides the field while keeping it in the DOM/POST so it still submits. */
+.gfield.iftp-gf-field-hidden {
+	display: none;
+}
+
 .iftp-gf-field {
 	margin: 0;
 	font-family: inherit;

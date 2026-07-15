@@ -92,6 +92,10 @@ If unavailable, we recommend using a low-value live transaction.
 
 All requests are encrypted over HTTPS and no sensitive payment data is stored on your website.
 
+= Why are payment links failing or setup timing out? =
+ 
+Your server firewall or VPN may be blocking outbound requests. The plugin must connect to ifthenpay APIs to function. Ensure your network administrator allows outbound HTTPS traffic to ifthenpay domains.
+
 == External Services ==
 
 This plugin integrates with the ifthenpay payment platform to process payments for GravityForms submissions. ifthenpay is a third-party service that provides secure payment processing for various methods including cards, wallets, and local bank transfers.
@@ -105,19 +109,24 @@ This plugin integrates with the ifthenpay payment platform to process payments f
     - During setup: Backoffice Key and Gateway Key for authentication and configuration retrieval.
     - During payment processing: Transaction ID, amount, description, enabled payment method accounts, success/error/cancel return URLs, language, and optionally the selected payment method, customer email, customer name, and form field data.
     - During callbacks: Payment status, Transaction ID, and payment method.
+  - **Network & VPN Requirements**: Outbound HTTPS requests are made to ifthenpay APIs for setup, link generation, and status validation. Servers behind strict firewalls or restrictive outbound VPNs must allowlist the following domains to prevent connection timeouts:
+    - [api.ifthenpay.com](https://api.ifthenpay.com)
+    - [ifthenpay.com](https://ifthenpay.com)
   - **End-User License Agreement (EULA)**: [EULA](https://ifthenpay.com/eula/)
   - **Privacy Policy**: [Privacy Policy](https://ifthenpay.com/politica-de-privacidade/)
 
 All network requests are performed server-side over HTTPS. Sensitive credentials are stored securely and are not publicly exposed. No raw card or bank details are stored.
 
 == Screenshots ==
-1. **(Admin Only) Backoffice Synchronization (GravityForms Settings -> Ifthenpay)**
-2. **(Admin Only) Adding ifthenpay's Payment field to the selected form**
-3. **(Admin Only) GravityForms's Form Feed Settings (Creation/Editing Form -> Settings)**
-4. **(Admin Only) ifthenpay's Gateway Configuration on a Feed Setting**
-5. **(Customers Experience) Payment Gateway field display varies by GravityForms settings**
-6. **(Customers Experience) Payment Window**
-7. **(Admin Only) Payment Entries**
+1. (Admin Only) Backoffice Synchronization (GravityForms Settings -> Ifthenpay)
+2. (Admin Only) Adding ifthenpay's Payment field to the selected form
+2. (Admin Only) ifthenpay's Payment field options
+4. (Admin Only) GravityForms's Form Feed Settings (Creation/Editing Form -> Settings)
+5. (Admin Only) ifthenpay's Gateway Configuration on a Feed Setting
+6. (Customers Experience) Payment Gateway field display varies by GravityForms settings
+7. (Customers Experience) Payment Window
+8. (Admin Only) Payment Entries
+9. (Admin Only) E-mail Payment Notification
 
 == Changelog ==
 

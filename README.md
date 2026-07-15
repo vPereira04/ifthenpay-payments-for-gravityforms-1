@@ -145,6 +145,13 @@ All requests are encrypted over HTTPS and no sensitive payment data is stored on
 
 </details>
 
+<details>
+<summary><strong>Why are payment links failing or setup timing out?</strong></summary>
+ 
+Your server firewall or VPN may be blocking outbound requests. The plugin must connect to ifthenpay APIs to function. Ensure your network administrator allows outbound HTTPS traffic to ifthenpay domains.
+ 
+</details>
+
 ## External Services
 
 This plugin integrates with the ifthenpay payment platform to process payments for GravityForms submissions. ifthenpay is a third-party service that provides secure payment processing for cards, wallets, and local bank transfers.
@@ -158,6 +165,9 @@ This plugin integrates with the ifthenpay payment platform to process payments f
     - During setup: Backoffice Key and Gateway Key for authentication and configuration retrieval.
     - During payment processing: Transaction ID, amount, description, enabled payment method accounts, success/error/cancel return URLs, language, and optionally the selected payment method, customer email, customer name, and form field data.
     - During callbacks: Payment status, Transaction ID, and payment method.
+  - **Network & VPN Requirements**: Outbound HTTPS requests are made to ifthenpay APIs for setup, link generation, and status validation. Servers behind strict firewalls or restrictive outbound VPNs must allowlist the following domains to prevent connection timeouts:
+    - [api.ifthenpay.com](https://api.ifthenpay.com)
+    - [ifthenpay.com](https://ifthenpay.com)
   - **End-User License Agreement (EULA)**: [EULA](https://ifthenpay.com/eula/)
   - **Privacy Policy**: [Privacy Policy](https://ifthenpay.com/politica-de-privacidade/)
 
@@ -171,16 +181,20 @@ Below are screenshots demonstrating key features and interfaces of the plugin:
    ![Backoffice Settings](.wordpress-org/screenshot-1.png)
 2. **(Admin Only) Adding ifthenpay's Payment field to the selected form**
    ![Adding Field to Form](.wordpress-org/screenshot-2.png)
-3. **(Admin Only) GravityForms's Form Feed Settings (Creation/Editing Form -> Settings)**
-   ![How to enter Feed Settings](.wordpress-org/screenshot-3.png)
-4. **(Admin Only) ifthenpay's Gateway Configuration on a Feed Setting**
-   ![Gateway Settings](.wordpress-org/screenshot-4.png)
-5. **(Customers Experience) Payment Gateway field display varies by GravityForms settings**
-   ![Backoffice Settings](.wordpress-org/screenshot-5.png)
-6. **(Customers Experience) Payment Window**
+2. **(Admin Only) ifthenpay's Payment field options**
+   ![Field Options](.wordpress-org/screenshot-3.png)
+4. **(Admin Only) GravityForms's Form Feed Settings (Creation/Editing Form -> Settings)**
+   ![How to enter Feed Settings](.wordpress-org/screenshot-4.png)
+5. **(Admin Only) ifthenpay's Gateway Configuration on a Feed Setting**
+   ![Gateway Settings](.wordpress-org/screenshot-5.png)
+6. **(Customers Experience) Payment Gateway field display varies by GravityForms settings**
    ![Backoffice Settings](.wordpress-org/screenshot-6.png)
-7. **(Admin Only) Payment Entries**
+7. **(Customers Experience) Payment Window**
    ![Backoffice Settings](.wordpress-org/screenshot-7.png)
+8. **(Admin Only) Payment Entries**
+   ![Backoffice Settings](.wordpress-org/screenshot-8.png)
+9. **(Admin Only) E-mail Payment Notification**
+   ![Payment Notification](.wordpress-org/screenshot-9.png)
 
 ## Support
 

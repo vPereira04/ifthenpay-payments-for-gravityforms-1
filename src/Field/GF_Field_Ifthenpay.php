@@ -41,11 +41,25 @@ class GF_Field_Ifthenpay extends \GF_Field {
 			'description_setting',
 			'css_class_setting',
 			'conditional_logic_field_setting',
+			'iftp_hide_field_setting',
 		);
 	}
 
 	public function is_conditional_logic_supported(): bool {
 		return false;
+	}
+
+	/**
+	 * Appends a class that visually hides the field (display:none) on the front-end
+	 * when the "Hide field" checkbox is enabled, while leaving it in the DOM/POST
+	 * so the payment flow keeps working normally.
+	 */
+	public function get_field_css_class(): string {
+		if ( $this->is_form_editor() || $this->is_entry_detail() ) {
+			return '';
+		}
+
+		return ! empty( $this->iftpHideField ) ? 'iftp-gf-field-hidden' : '';
 	}
 
 	public function get_form_editor_inline_script_on_page_render(): string {

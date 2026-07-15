@@ -69,6 +69,9 @@ class Addon extends \GFPaymentAddOn
 		}
 
 		add_filter('gform_validation', array($this, 'enforce_single_payment_gateway'));
+
+		add_filter('gform_custom_merge_tags', array($this, 'add_paybylink_merge_tag'), 10, 4);
+		add_filter('gform_replace_merge_tags', array($this, 'replace_paybylink_merge_tag'), 10, 7);
 	}
 
 	public function init_admin(): void
@@ -76,6 +79,10 @@ class Addon extends \GFPaymentAddOn
 		parent::init_admin();
 		add_action('admin_notices', array($this, 'render_admin_notices'));
 		add_action('enqueue_block_editor_assets', array($this, 'enqueue_block_editor_styles'));
+
+		add_filter('gform_tooltips', array($this, 'add_hide_field_tooltip'));
+		add_action('gform_field_standard_settings', array($this, 'render_hide_field_setting'), 10, 2);
+		add_action('gform_editor_js', array($this, 'hide_field_editor_js'));
 	}
 
 	/**
@@ -168,6 +175,7 @@ class Addon extends \GFPaymentAddOn
 					array('admin_page' => array('form_editor')),
 					array('admin_page' => array('entry_list')),
 					array('admin_page' => array('entry_detail')),
+					array('admin_page' => array('results')),
 				),
 			),
 			array(
@@ -918,8 +926,6 @@ class Addon extends \GFPaymentAddOn
 		$redirect_url   = (string) $response['RedirectUrl'];
 		$transaction_id = (string) $response['PinCode'];
 
-		$this->insert_transaction($entry_id, 'payment', $transaction_id, $amount);
-
 		gform_update_meta($entry_id, 'iftp_gf_transaction_id', $transaction_id);
 		gform_update_meta($entry_id, 'iftp_gf_gateway_key', $gateway_key);
 		gform_update_meta($entry_id, 'iftp_gf_payment_status', 'pending');
@@ -1066,6 +1072,107 @@ class Addon extends \GFPaymentAddOn
 
 		$validation_result['form'] = $form;
 		return $validation_result;
+	}
+
+	/**
+	 * Adds {ifthenpay_paybylink} to the "Insert Merge Tag" dropdown (confirmations,
+	 * notifications, etc.) so admins can send the customer their payment link by email.
+	 *
+	 * @param array<int, array<string, string>> $merge_tags
+	 * @param int                                $form_id
+	 * @param array                              $fields
+	 * @param string                             $element_id
+	 * @return array<int, array<string, string>>
+	 */
+	public function add_paybylink_merge_tag($merge_tags, $form_id, $fields, $element_id): array
+	{
+		$merge_tags[] = array(
+			'label' => __('ifthenpay Pay by Link', 'ifthenpay-payments-for-gravityforms'),
+			'tag'   => '{ifthenpay_paybylink}',
+		);
+
+		return $merge_tags;
+	}
+
+	/**
+	 * Resolves {ifthenpay_paybylink} to the entry's stored payment redirect URL
+	 * wherever GravityForms replaces merge tags (confirmations, notifications, ...).
+	 *
+	 * @param string     $text
+	 * @param array|null $form
+	 * @param array|null $entry
+	 * @param bool       $url_encode
+	 * @param bool       $esc_html
+	 * @param bool       $nl2br
+	 * @param string     $format
+	 */
+	public function replace_paybylink_merge_tag($text, $form, $entry, $url_encode, $esc_html, $nl2br, $format): string
+	{
+		if (! is_string($text) || strpos($text, '{ifthenpay_paybylink}') === false) {
+			return $text;
+		}
+
+		$entry_id = is_array($entry) ? (int) rgar($entry, 'id') : 0;
+		$link     = $entry_id > 0 ? (string) gform_get_meta($entry_id, 'iftp_gf_redirect_url') : '';
+
+		if ($link !== '') {
+			$link = $url_encode ? urlencode($link) : $link;
+		}
+
+		return str_replace('{ifthenpay_paybylink}', $link, $text);
+	}
+
+	/**
+	 * Registers the tooltip shown next to the "Hide field" checkbox in the form editor.
+	 *
+	 * @param array<string, string> $tooltips
+	 * @return array<string, string>
+	 */
+	public function add_hide_field_tooltip($tooltips): array
+	{
+		$tooltips['iftp_hide_field_setting'] = '<h6>' . esc_html__('Hide field', 'ifthenpay-payments-for-gravityforms') . '</h6>'
+			. esc_html__('Visually hides this field on the form (display:none) while keeping it fully functional — the payment flow still runs normally on submit.', 'ifthenpay-payments-for-gravityforms');
+
+		return $tooltips;
+	}
+
+	/**
+	 * Renders the "Hide field" checkbox at the end of the General settings tab.
+	 * Only shown for our field type because 'iftp_hide_field_setting' is declared
+	 * in GF_Field_Ifthenpay::get_form_editor_field_settings().
+	 *
+	 * @param int $position
+	 * @param int $form_id
+	 */
+	public function render_hide_field_setting($position, $form_id): void
+	{
+		if ($position !== -1) {
+			return;
+		}
+		?>
+		<li class="iftp_hide_field_setting field_setting">
+			<input type="checkbox" id="iftp_hide_field" onclick="SetFieldProperty('iftpHideField', this.checked);" onkeypress="SetFieldProperty('iftpHideField', this.checked);" />
+			<label for="iftp_hide_field" class="inline">
+				<?php esc_html_e('Hide field', 'ifthenpay-payments-for-gravityforms'); ?>
+				<?php gform_tooltip('iftp_hide_field_setting'); ?>
+			</label>
+		</li>
+		<?php
+	}
+
+	/**
+	 * Syncs the "Hide field" checkbox with the selected field's iftpHideField property
+	 * whenever the form editor loads a field's settings into the sidebar.
+	 */
+	public function hide_field_editor_js(): void
+	{
+		?>
+		<script type="text/javascript">
+			jQuery(document).on('gform_load_field_settings', function (event, field) {
+				jQuery('#iftp_hide_field').prop('checked', !! field.iftpHideField);
+			});
+		</script>
+		<?php
 	}
 
 	/**
