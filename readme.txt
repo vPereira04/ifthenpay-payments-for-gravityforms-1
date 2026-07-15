@@ -1,6 +1,6 @@
 === ifthenpay | Payments for GravityForms ===
 Contributors: ifthenpay
-Tags: ifthenpay, gravityforms, payments, pay by link, gateway
+Tags: ifthenpay, gravityforms, payments, ifthenpay wordpress, gateway
 Requires at least: 6.5
 Tested up to: 7.0
 Requires PHP: 8.2
@@ -130,10 +130,16 @@ All network requests are performed server-side over HTTPS. Sensitive credentials
 
 == Changelog ==
 
+= 1.1.0 =
+* chore: update version to 1.1.0 feat: Update Plugin and Fix minor bug on Sales
+
 = 1.0.0 =
 * Initial release: GravityForms integration, ifthenpay payments, multi-method support, modal.
 
 == Upgrade Notice ==
+
+= 1.1.0 =
+Updated the Plugin and Fixed minor bug on Sales (Dupped values)
 
 = 1.0.0 =
 Initial release. Review gateway settings payments before going live.
