@@ -3,7 +3,7 @@ name: Deploy to WordPress.org & GitHub Release
 on:
   push:
     tags:
-      - "v*" # e.g. v1.0.0
+      - "v*" # e.g. v1.1.0
 
 env:
   # 🔧 CHANGE PER PLUGIN

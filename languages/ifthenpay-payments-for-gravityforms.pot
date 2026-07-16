@@ -2,7 +2,7 @@
 # This file is distributed under the same license as the ifthenpay-payments-for-gravityforms package.
 msgid ""
 msgstr ""
-"Project-Id-Version: ifthenpay-payments-for-gravityforms 1.0.0\n"
+"Project-Id-Version: ifthenpay-payments-for-gravityforms 1.1.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/ifthenpay-payments-for-gravityforms\n"
 "POT-Creation-Date: 2026-06-16 08:40:26+00:00\n"
 "MIME-Version: 1.0\n"
